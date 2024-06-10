@@ -1,30 +1,27 @@
-import {Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Router, RouterLink, RouterOutlet} from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import {AuthService} from "./auth.service";
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from "./services/auth.service";
+import { NavbarComponent } from './components/navbar/navbar.component';
+import {combineLatest, from} from "rxjs";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink],
+  imports: [CommonModule, RouterOutlet, RouterLink, NavbarComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
   authService = inject(AuthService);
   router = inject(Router);
+  isLoggedIn = false;
 
   ngOnInit(): void {
-    this.authService.user$.subscribe((user: { email: string; displayName: string; }) => {
-      if (user) {
-        this.authService.currentUserSig.set({
-          email: user.email!,
-          username: user.displayName!,
-        });
-      } else {
-        this.authService.currentUserSig.set(null);
-      }
-      console.log(this.authService.currentUserSig())
+    combineLatest(
+      this.authService.onAuthStateChanged(),
+      from(this.authService.logout()) // Observable that completes after logout
+    ).subscribe(([isLoggedIn]) => {
+      this.isLoggedIn = isLoggedIn;
     });
   }
 
@@ -39,12 +36,11 @@ export class AppComponent implements OnInit {
   logout(): void {
     this.authService.logout().subscribe(() => {
       console.log('User logged out');
-      this.authService.currentUserSig.set(null); // Atualizar o sinal do usuário para null
-      const urlTree = this.router.createUrlTree(['/']); // Construct UrlTree
-      this.router.navigateByUrl(urlTree);
-      }, error => {
+      this.authService.currentUserSig.set(null);
+      const urlTree = this.router.createUrlTree(['/login']); // Construct UrlTree
+      this.router.navigateByUrl(urlTree).then(r => {});
+    }, error => {
       console.error('Logout failed', error);
     });
-
   }
 }

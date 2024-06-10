@@ -7,10 +7,10 @@ import {
   user,
   signInWithPopup,
   GoogleAuthProvider,
-  GithubAuthProvider
+  GithubAuthProvider, onAuthStateChanged
 } from "@angular/fire/auth";
-import {from, Observable} from "rxjs";
-import {UserInterface} from "./user.interface";
+import {from, map, Observable} from "rxjs";
+import {UserInterface} from "../interfaces/user.interface";
 
 @Injectable({
       providedIn: 'root'
@@ -21,6 +21,20 @@ export class AuthService {
   firebaseAuth = inject(Auth);
   user$ = user(this.firebaseAuth);
   currentUserSig = signal<UserInterface | null | undefined>(undefined)
+
+  constructor() {
+    // Subscribe to onAuthStateChanged to update currentUserSig
+    onAuthStateChanged(this.firebaseAuth, (user) => {
+      if (user) {
+        this.currentUserSig.set({
+          email: user.email!,
+          username: user.displayName!,
+        });
+      } else {
+        this.currentUserSig.set(null);
+      }
+    });
+  }
 
   register(email: string, username: string, password: string): Observable<void> {
     const promise =
@@ -55,4 +69,17 @@ export class AuthService {
     return from(promise);
   }
 
+  onAuthStateChanged(): Observable<boolean> {
+    return new Observable(subscriber => {
+      const unsubscribe = onAuthStateChanged(this.firebaseAuth, (user) => {
+        if (user) {
+          subscriber.next(true);
+        } else {
+          subscriber.next(false);
+        }
+      });
+
+      return () => unsubscribe();
+    });
+  }
 }
