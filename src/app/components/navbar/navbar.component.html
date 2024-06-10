@@ -1,0 +1,33 @@
+<div class="d-flex">
+  <ul class="nav nav-pills menu-container">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/main" routerLinkActive="active">Home</a>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Users</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Add users (on-hold)</a>
+        <a class="dropdown-item" href="#">Edit users (on-hold)</a>
+      </div>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Trips</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" routerLink="/visionLandmarkDetection">Picture your destiny</a>
+      </div>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">AI / Data Tools</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" routerLink="/visionFaceDetection">What is your mood?</a>
+        <a class="dropdown-item" routerLink="/sentiment">Sentiment Analysis</a>
+        <a class="dropdown-item" routerLink="/translator">Translator</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Fraud Detection (in progress)</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" (click)="handleLogout()">Logout</a>
+    </li>
+  </ul>
+</div>
