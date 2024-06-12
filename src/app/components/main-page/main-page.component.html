@@ -1,1 +1,35 @@
-<p>main-page works!</p>
+<div class="container-fluid my-5">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-8 d-flex flex-column justify-content-center align-items-center">
+      <h1 class="display-4 mb-4 text-center text-primary">Welcome to e-Core GCP, {{authService.currentUserSig()?.username}}</h1>
+      <p class="lead mb-4 text-center text-secondary">Discover the power of GCP and how e-Core can help you unlock its full potential.</p>
+      <div class="d-flex">
+        <a href="#" class="btn btn-primary mr-3">Learn More</a>
+        <a href="#" class="btn btn-secondary">Get Started</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid bg-light py-5">
+  <div class="container">
+    <h2 class="text-center mb-4 text-secondary">Why Choose e-Core?</h2>
+    <div class="row">
+      <div class="col-md-4 text-center">
+        <i class="fas fa-cloud-upload-alt fa-3x mb-3 text-primary"></i>
+        <h4>Seamless Cloud Migration</h4>
+        <p class="text-secondary">Our experts will guide you through a smooth transition to the GCP cloud.</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <i class="fas fa-cog fa-3x mb-3 text-primary"></i>
+        <h4>Optimized GCP Solutions</h4>
+        <p class="text-secondary">We'll help you leverage GCP services to drive your business forward.</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <i class="fas fa-chart-line fa-3x mb-3 text-primary"></i>
+        <h4>Continuous Optimization</h4>
+        <p class="text-secondary">Our team will continuously monitor and optimize your GCP infrastructure.</p>
+      </div>
+    </div>
+  </div>
+</div>

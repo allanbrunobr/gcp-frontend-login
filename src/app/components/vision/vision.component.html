@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      Cloud Vision
+    </div>
+    <div class="card-body">
+      <form (submit)="onSubmit()" class="needs-validation" novalidate enctype="multipart/form-data">
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <div class="card image-card">
+              <img #imageElement src="/images/no-picture.png" class="card-img-top" alt="No image uploaded" id="uploaded-image">
+            </div>
+          </div>
+          <div class="col-md-8 mb-3">
+            <div class="form-group">
+              <label for="file-upload" class="custom-file-upload d-flex align-items-center">
+                <i class="fas fa-cloud-upload-alt mr-2"></i> Upload image
+              </label>
+              <input #fileInput type="file" id="file-upload" name="file" accept="image/png, image/jpeg" class="d-none">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <button class="btn btn-primary" type="submit">Tell me</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

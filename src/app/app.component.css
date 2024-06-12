@@ -1,3 +1,78 @@
 .defer {
   margin-top: 300px;
 }
+
+/* Define the main turquoise background color */
+body {
+  background-color: #40E0D0; /* Turquoise color */
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #006666; /* Dark turquoise */
+}
+
+.navbar .nav-link {
+  color: #FFFFFF; /* White text color */
+}
+
+.navbar .nav-link:hover, .navbar .nav-link:focus {
+  background-color: #00CED1; /* Light turquoise on hover/focus */
+  color: #FFFFFF;
+}
+
+.navbar .nav-link.active {
+  background-color: #00CED1; /* Light turquoise for active link */
+  color: #FFFFFF;
+}
+
+/* Dropdown Menu Styles */
+.dropdown-menu {
+  background-color: #006666; /* Dark turquoise */
+}
+
+.dropdown-item {
+  color: #FFFFFF; /* White text color */
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+  background-color: #00CED1; /* Light turquoise on hover/focus */
+  color: #FFFFFF;
+}
+
+.dropdown-divider {
+  border-top: 1px solid #FFFFFF; /* White divider */
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #00CED1; /* Light turquoise */
+  border-color: #00CED1;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #20B2AA; /* Medium turquoise on hover/focus */
+  border-color: #20B2AA;
+}
+
+.btn-secondary {
+  background-color: #006666; /* Dark turquoise */
+  border-color: #006666;
+  color: #FFFFFF;
+}
+
+.btn-secondary:hover, .btn-secondary:focus {
+  background-color: #20B2AA; /* Medium turquoise on hover/focus */
+  border-color: #20B2AA;
+  color: #FFFFFF;
+}
+
+/* Additional styling for text and elements */
+.text-primary {
+  color: #00CED1 !important; /* Light turquoise text */
+}
+
+.text-secondary {
+  color: #006666 !important; /* Dark turquoise text */
+}
+
