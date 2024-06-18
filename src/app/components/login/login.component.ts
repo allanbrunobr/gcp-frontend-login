@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common'; // Importar CommonModule
 import {AuthService} from "../../services/auth.service";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+const reactAddress = '/react-app-route';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -33,7 +35,8 @@ export class LoginComponent implements OnInit{
       .login(form.email, form.password)
       .subscribe({
         next: () => {
-          const urlTree = this.router.createUrlTree(['/main']); // Construct UrlTree
+          const urlTree = this.router.createUrlTree([reactAddress],
+            { queryParams: { email: form.email } }); // Add email as query param
           this.router.navigateByUrl(urlTree);
         },
         error: (err) => {
@@ -44,8 +47,9 @@ export class LoginComponent implements OnInit{
 
   loginWithGoogle(): void {
     this.authService.loginWithGoogle().subscribe({
-      next: () => {
-        const urlTree = this.router.createUrlTree(['/main']);
+      next: (result) => {
+        const urlTree = this.router.createUrlTree([reactAddress],
+          { queryParams: { username: result.displayName  } });
         this.router.navigateByUrl(urlTree);
       },
       error: (err) => {
@@ -56,8 +60,9 @@ export class LoginComponent implements OnInit{
 
   loginWithGithub(): void {
     this.authService.loginWithGithub().subscribe({
-      next: () => {
-        const urlTree = this.router.createUrlTree(['/main']);
+      next: (result) => {
+        const urlTree = this.router.createUrlTree([reactAddress],
+                        { queryParams: { username: result.displayName  } });
         this.router.navigateByUrl(urlTree);
       },
       error: (err) => {
