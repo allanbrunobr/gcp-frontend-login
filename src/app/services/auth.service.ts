@@ -9,27 +9,39 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider, onAuthStateChanged
 } from "@angular/fire/auth";
-import {from, map, Observable} from "rxjs";
+import {from, map, Observable, of, tap} from "rxjs";
+import { switchMap } from 'rxjs/operators';
 import {UserInterface} from "../interfaces/user.interface";
+import { Router } from '@angular/router';
 
 @Injectable({
       providedIn: 'root'
 
 })
-
 export class AuthService {
   firebaseAuth = inject(Auth);
   user$ = user(this.firebaseAuth);
   currentUserSig = signal<UserInterface | null | undefined>(undefined)
 
-  constructor() {
+  constructor(private router: Router) {
     // Subscribe to onAuthStateChanged to update currentUserSig
-    onAuthStateChanged(this.firebaseAuth, (user) => {
+    onAuthStateChanged(this.firebaseAuth, async (user) => {
       if (user) {
-        this.currentUserSig.set({
-          email: user.email!,
-          username: user.displayName!,
-        });
+        const idToken = await user.getIdToken(); // Get Firebase ID token
+        const userData = {
+          isLoggedIn: true,
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+        };
+        console.log(userData);
+        localStorage.setItem('userData', JSON.stringify(userData)); // Store in localStorage
+        const url = new URL('http://localhost:3001'); // URL of your React app
+        url.searchParams.set('username', user.displayName || '');
+        url.searchParams.set('email', user.email || '');
+        window.location.href = url.toString();
+       // await this.router.navigate(['/react-app-route']);
+
       } else {
         this.currentUserSig.set(null);
       }
@@ -52,15 +64,19 @@ export class AuthService {
     return from(promise)
   }
 
-  loginWithGoogle(): Observable<void> {
+  loginWithGoogle(): Observable<{ email: string | null, displayName: string | null }> {
     const provider = new GoogleAuthProvider();
-    const promise = signInWithPopup(this.firebaseAuth, provider).then(() => {});
+    const promise = signInWithPopup(this.firebaseAuth, provider).then((result) => {
+      return { email: result.user.email, displayName: result.user.displayName };
+    });
     return from(promise);
   }
 
-  loginWithGithub(): Observable<void> {
+  loginWithGithub(): Observable<{ email: string | null, displayName: string | null }> {
     const provider = new GithubAuthProvider();
-    const promise = signInWithPopup(this.firebaseAuth, provider).then(() => {});
+    const promise = signInWithPopup(this.firebaseAuth, provider).then((result) => {
+      return { email: result.user.email, displayName: result.user.displayName };
+    });
     return from(promise);
   }
 
@@ -81,5 +97,9 @@ export class AuthService {
 
       return () => unsubscribe();
     });
+  }
+
+  getCurrentUsername(): string | null {
+    return this.currentUserSig()?.username || null;
   }
 }
