@@ -4,11 +4,12 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from "./services/auth.service";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {combineLatest, from} from "rxjs";
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, NavbarComponent],
+  imports: [CommonModule, RouterOutlet, RouterLink, NavbarComponent, HttpClientModule],
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {

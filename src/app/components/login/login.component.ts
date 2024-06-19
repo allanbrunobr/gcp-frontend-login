@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common'; // Importar CommonModule
+import { CommonModule } from '@angular/common';
 import {AuthService} from "../../services/auth.service";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 

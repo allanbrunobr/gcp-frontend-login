@@ -1,19 +1,20 @@
-import {inject, Injectable, signal} from "@angular/core";
+import { inject, Injectable, signal } from "@angular/core";
 import {
   Auth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword, signOut,
+  signInWithEmailAndPassword,
+  signOut,
   updateProfile,
   user,
   signInWithPopup,
   GoogleAuthProvider,
-  GithubAuthProvider, onAuthStateChanged
+  GithubAuthProvider,
+  onAuthStateChanged
 } from "@angular/fire/auth";
-import {from, map, Observable, of, tap} from "rxjs";
-import { switchMap } from 'rxjs/operators';
-import {UserInterface} from "../interfaces/user.interface";
+import { from, Observable } from "rxjs";
+import { UserInterface } from "../interfaces/user.interface";
 import { Router } from '@angular/router';
-
+import { HttpClient } from '@angular/common/http';
 @Injectable({
       providedIn: 'root'
 
@@ -22,30 +23,43 @@ export class AuthService {
   firebaseAuth = inject(Auth);
   user$ = user(this.firebaseAuth);
   currentUserSig = signal<UserInterface | null | undefined>(undefined)
+  private backendUrl = 'http://localhost:8080'; // URL do seu backend Spring Boot
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private http: HttpClient) {
     // Subscribe to onAuthStateChanged to update currentUserSig
     onAuthStateChanged(this.firebaseAuth, async (user) => {
       if (user) {
         const idToken = await user.getIdToken(); // Get Firebase ID token
-        const userData = {
-          isLoggedIn: true,
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-        };
-        console.log(userData);
-        localStorage.setItem('userData', JSON.stringify(userData)); // Store in localStorage
-        const url = new URL('http://localhost:3001'); // URL of your React app
-        url.searchParams.set('username', user.displayName || '');
-        url.searchParams.set('email', user.email || '');
-        window.location.href = url.toString();
-       // await this.router.navigate(['/react-app-route']);
-
+        this.generateJwt(idToken).subscribe(response => {
+          const jwt = response.token;
+          sessionStorage.setItem('token', jwt);
+          //this.router.navigate(['/react-app-route']);
+          const url = new URL('http://localhost:3001/'); // URL of your React app
+          url.searchParams.set('token', jwt);
+          window.location.href = url.toString();
+        });
+       //  const idToken = await user.getIdToken(); // Get Firebase ID token
+       //  const userData = {
+       //    isLoggedIn: true,
+       //    uid: user.uid,
+       //    email: user.email,
+       //    displayName: user.displayName,
+       //  };
+       //  console.log(userData);
+       //  sessionStorage.setItem('userData', JSON.stringify({ username: user.displayName, email: user.email }));
+       //  const url = new URL('http://localhost:3001'); // URL of your React app
+       //  url.searchParams.set('username', user.displayName || '');
+       //  url.searchParams.set('email', user.email || '');
+       //  window.location.href = url.toString();
+       // // await this.router.navigate(['/react-app-route']);
       } else {
         this.currentUserSig.set(null);
       }
     });
+  }
+
+  generateJwt(firebaseToken: string): Observable<{ token: string }> {
+    return this.http.post<{ token: string }>(`${this.backendUrl}/generateJwt`, { firebaseToken });
   }
 
   register(email: string, username: string, password: string): Observable<void> {
