@@ -1,27 +1,40 @@
-# AngularFirebase
+# Angular Firebase Auth Service
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.2.
+This project is an Angular authentication service example using Firebase Auth and TypeScript. It demonstrates the usage of multiple Firebase operations such as user registration, login, social login (Google & Github), generating JWT, etc.
 
-## Development server
+## Main Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- User Registration
+- User Login
+- Google & Github Social Login
+- JSON Web Token (JWT) Generation
+- User Session Handling
 
-## Code scaffolding
+## Technologies
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular 17.0.0
+- Firebase Auth
+- TypeScript 5.2.2
+- RxJS 7.8.0
 
-## Build
+## Setup
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Assuming you have [Node.js](https://nodejs.org/) and [Angular CLI](https://cli.angular.io/) installed on your machine, you can setup the project by following these steps:
 
-## Running unit tests
+1. Clone the repository: `git clone https://github.com/yourusername/yourrepository.git`
+2. Navigate to project directory: `cd yourrepository`
+3. Install dependencies: `npm install`
+4. Update Firebase settings in environment file located in `src/environments/environment.ts`.
+5. Run the project: `ng serve`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Usage
 
-## Running end-to-end tests
+Implement the `AuthService` in your Angular components to perform authentication operations with Firebase.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Contributing
 
-## Further help
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## License
+
+This project is open-source licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
