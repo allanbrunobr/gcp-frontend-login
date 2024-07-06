@@ -21,8 +21,8 @@ This project is an Angular authentication service example using Firebase Auth an
 
 Assuming you have [Node.js](https://nodejs.org/) and [Angular CLI](https://cli.angular.io/) installed on your machine, you can setup the project by following these steps:
 
-1. Clone the repository: `git clone https://github.com/yourusername/yourrepository.git`
-2. Navigate to project directory: `cd yourrepository`
+1. Clone the repository: `git clone https://github.com/allanbrunobr/gcp-frontend-login.git`
+2. Navigate to project directory: `cd gcp-frontend-login`
 3. Install dependencies: `npm install`
 4. Update Firebase settings in environment file located in `src/environments/environment.ts`.
 5. Run the project: `ng serve`
